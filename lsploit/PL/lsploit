@@ -1,7 +1,7 @@
 #!/bin/bash
-# LSPLOIT v1.0 by LYSYyy
+# LSPLOIT v1.1 by LYSYyy
 
-version="1.0"
+version="1.1"
 
 
 # LOGO #
@@ -200,6 +200,9 @@ function connect_exploit
         rm ~/.lsploit/$lhostc.rc
         
         menu
+	
+    elif [ $copcja = "0" ]; then
+    	menu
         
     else
 		echo
