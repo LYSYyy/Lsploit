@@ -43,6 +43,7 @@ function main
 		lsploit
 		
 	else
+		clear
 		main
 	fi
 }
