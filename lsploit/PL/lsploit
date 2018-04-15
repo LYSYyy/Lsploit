@@ -182,7 +182,7 @@ function connect_exploit
 		read -e lhostc
 		echo -ne "\e[21;36mProsze podac LPORT:\e[1;39m "
 		read -e lportc
-		echo -ne "\e[36mProsze podac PAYLOAD:\e[1;39m "
+		echo -ne "\e[21;36mProsze podac PAYLOAD:\e[1;39m "
 		read -e payload
 		
 		echo
