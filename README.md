@@ -16,6 +16,8 @@ Lsploit is a program for quickly and lightly creating basic exploits that use re
 
 - Using the MSFencode system
 
+- Backdoors generator
+
 - Working with MFC
 
 - Two languages available: PL / EN
